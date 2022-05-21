@@ -1,0 +1,19 @@
+.displayflex{
+    display: flex;
+}
+.MandatoryField{
+    color: red
+}
+.lineBreak{
+    height: 10px;
+}
+.fwidth{
+    width: 130px; ;
+}
+.ml40{
+    margin-left: 40px;
+}
+.mt40{
+    margin-top: 40px;
+}
+ 
