@@ -1,2 +1,2 @@
 # PremiumCalculator
-PremiumCalculator in Angular+ WebAPI (.net Co
+PremiumCalculator UI in Angular
