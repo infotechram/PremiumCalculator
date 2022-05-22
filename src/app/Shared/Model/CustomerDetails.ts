@@ -1,7 +1,7 @@
 export class CustomerDetails {
-   name:string ;
-   age: number ;
-   DOB: Date ;
-   occupationValue: number = -1  ;
-   insuredAmount : any;
+   name?:string ;
+   age?: number ;
+   DOB?: any ;
+   occupationValue?: string ;
+   insuredAmount? : string;
   }

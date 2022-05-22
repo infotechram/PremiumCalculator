@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {CustomerDetails} from 'src/app/Shared/Model/CustomerDetails'
+import {OccupationMaster } from 'src/app/Shared/Model/OccupationMaster'
 import {
   FormsModule,
   FormGroup,
-  FormControl
+  FormControl,
+  NgForm
 } from '@angular/forms';
+import { PremiumCalculatorServerService } from '../Shared/premium-calculator-server.service';
 
 @Component({
   selector: 'app-premium-calculator',
@@ -12,16 +15,46 @@ import {
   styleUrls: ['./premium-calculator.component.css']
 })
 export class PremiumCalculatorComponent implements OnInit {
-  cus: CustomerDetails = new CustomerDetails();
-  Occupations = ['Really Smart', 'Super Flexible',
-  'Super Hot', 'Weather Changer'];
-  constructor() { }
+  cus: CustomerDetails ;
+  occupations: OccupationMaster[];
+  isLoading = true;
+  premiumAmount: any= '0.0';
+  @ViewChild('f') pForm: NgForm;
+  isFormValid = true;
+
+  constructor(private premiumCalculatorServerService:PremiumCalculatorServerService) {
+    
+   }
 
   ngOnInit() {
-  //  this.cus.occupationValue = -1;
+     this.premiumCalculatorServerService.GetOccupationMaster().subscribe(
+     (data: any)=>{
+       this.cus ={
+         name:"",
+         DOB:"",
+         age: 0,
+         occupationValue: "-1"
+         
+       }
+       this.occupations = data;
+           this.isLoading = false;
+     }
+
+     );
+    
   }
-  OnSubmit(){
-    console.log("form submitted");
+  CalculatePremium(){
+    if(this.pForm.valid)
+    {
+      this.premiumCalculatorServerService.CalculatePremium(this.cus).subscribe(
+        (data: any)=>{
+          this.premiumAmount = data;
+          });
+    }
+    else {
+      this.isFormValid = false;
+    }
+   
   }
   calculateAge(){
     if(this.cus.DOB){

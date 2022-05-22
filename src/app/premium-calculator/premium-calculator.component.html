@@ -1,123 +1,142 @@
-<div class="form-container ml40 ">
-  <div class="form-title-row">
-    <h1>Monthly Premium Calculator</h1>
-  </div>
-  <form novalidate (ngSubmit)="OnSubmit()" #f="ngForm">
-    <div class="row">
+<div *ngIf="!isLoading">
+<div *ngIf="!isFormValid">
+  <span  class="MandatoryField"> Please provide all mandatory values</span>
+</div>
+
+  <div class="form-container ml40 ">
+    <div class="form-title-row">
+      <h1>Monthly Premium Calculator</h1>
+    </div>
+    <form novalidate   #f="ngForm">
+      <div class="row">
+          <div class="displayflex">
+            <div class="form-group displayflex">
+              <div class="fwidth">
+                  <label>Name <span class="MandatoryField">*</span>&nbsp;:&nbsp; </label></div>
+              <div>
+                <input type="text"
+                    class="form-control"
+                    name="Customername"
+                    [(ngModel)]="cus.name"
+                    required
+                    placeholder="Enter Name"
+                    #Customername="ngModel">
+              </div> 
+             </div>
+            <div class="form-control-feedback"
+              *ngIf="!Customername?.valid && (Customername?.dirty || Customername?.touched)">
+              <div *ngIf="Customername.errors.required"><span class="MandatoryField">&nbsp; Name is required&nbsp; </span></div>
+            </div>
+          </div>
+      </div>
+      <div class="row lineBreak">
+      </div>
+      <div class="row">
+          <div class="displayflex">
+            <div class="form-group displayflex">
+                <div class="fwidth">
+                  <label >Date of Birth <span class="MandatoryField">*</span>&nbsp; :&nbsp; </label>
+                </div>
+                <div>
+                  <input type="text"
+                  class="form-control"
+                  name="BirthDate"
+                  type = "date"
+                  [(ngModel)]="cus.DOB" 
+                  (ngModelChange)="calculateAge()"
+                  required
+                  #BirthDate="ngModel">
+                </div>
+            </div>
+            <div class="form-control-feedback"
+            *ngIf="!BirthDate?.valid && (BirthDate?.dirty || BirthDate?.touched)">
+            <div *ngIf="BirthDate.errors.required"><span class="MandatoryField">&nbsp; Date of Birth is required&nbsp; </span></div>
+            </div>
+          </div>
+      </div>
+      <div class="row lineBreak">
+      </div>
+      <div class="row">
+        <div class="form-group displayflex">
+          <div class="fwidth">
+            <label>Age &nbsp; : &nbsp; </label>
+          </div>
+          <div>
+            <input type="text"
+            class="form-control"
+            name="CustomerAge"
+            [(ngModel)]="cus.age"
+            #CustomerAge="ngModel" disabled="true">
+          </div>
+          </div>
+      </div>
+      <div class="row lineBreak">
+      </div>
+      <div class="row">
         <div class="displayflex">
           <div class="form-group displayflex">
             <div class="fwidth">
-                <label>Name <span class="MandatoryField">*</span>&nbsp; :&nbsp; </label></div>
+                <label>Death - Sum Insurred <span class="MandatoryField">*</span>&nbsp; :&nbsp; </label></div>
             <div>
               <input type="text"
                   class="form-control"
-                  name="Customername"
-                  [(ngModel)]="cus.name"
+                  name="CustomerInsuredAmount"
+                  [(ngModel)]="cus.insuredAmount"
                   required
-                  placeholder="Enter Name"
-                  #Cname="ngModel">
+                  placeholder="Enter Insurred Amount"
+                  #CustomerInsuredAmount="ngModel">
             </div> 
            </div>
           <div class="form-control-feedback"
-            *ngIf="Cname.errors && (Cname.dirty || Cname.touched)">
-            <div *ngIf="Cname.errors.required"><span class="MandatoryField">&nbsp; Name is required&nbsp; </span></div>
+            *ngIf="!CustomerInsuredAmount?.valid && (CustomerInsuredAmount?.dirty || CustomerInsuredAmount?.touched)">
+            <div *ngIf="CustomerInsuredAmount.errors.required"><span class="MandatoryField">&nbsp; Insurred Amount is required&nbsp; 
+  
+  </span></div>
           </div>
-        </div>
-    </div>
-    <div class="row lineBreak">
-    </div>
-    <div class="row">
-        <div class="displayflex">
-          <div class="form-group displayflex">
-              <div class="fwidth">
-                <label >Date of Birth <span class="MandatoryField">*</span>&nbsp; :&nbsp; </label>
-              </div>
-              <div>
-                <input type="text"
-                class="form-control"
-                name="DOB"
-                type = "date"
-                [(ngModel)]="cus.DOB" 
-                (ngModelChange)="calculateAge()"
-                required
-                #DOB="ngModel">
-              </div>
-             
-          </div>
-          <div class="form-control-feedback"
-          *ngIf="DOB.errors && (DOB.dirty || DOB.touched)">
-          <div *ngIf="DOB.errors.required"><span class="MandatoryField">&nbsp; Date of Birth is required&nbsp; </span></div>
-          </div>
-        </div>
-    </div>
-    <div class="row lineBreak">
-    </div>
-    <div class="row">
-      <div class="form-group displayflex">
-        <div class="fwidth">
-          <label>Age &nbsp; : &nbsp; </label>
-        </div>
-        <div>
-          <input type="text"
-          class="form-control"
-          name="CustomerAge"
-          [(ngModel)]="cus.age"
-          #Cname="ngModel" disabled="true">
-        </div>
-          
-        
-        </div>
-    </div>
-    <div class="row lineBreak">
-    </div>
-    <div class="row">
-      <div class="displayflex">
-        <div class="form-group displayflex">
-          <div class="fwidth">
-              <label>Death - Sum Insurred <span class="MandatoryField">*</span>&nbsp; :&nbsp; </label></div>
-          <div>
-            <input type="text"
-                class="form-control"
-                name="CustomerInsuredAmount"
-                [(ngModel)]="cus.insuredAmount"
-                required
-                placeholder="Enter Insurred Amount"
-                #CInsuredAmount="ngModel">
-          </div> 
-         </div>
-        <div class="form-control-feedback"
-          *ngIf="CInsuredAmount.errors && (CInsuredAmount.dirty || CInsuredAmount.touched)">
-          <div *ngIf="CInsuredAmount.errors.required"><span class="MandatoryField">&nbsp; Insurred Amount is required&nbsp; </span></div>
-        </div>
-      </div>
-    </div>
-    <div class="row lineBreak">
-    </div>
-    <div class="row">
-        <div class="displayflex">
-          <div class="form-group displayflex">
-            <div class="fwidth">
-              <label>Occupation <span class="MandatoryField">*</span>&nbsp; :&nbsp; </label>
-            </div>
-            <div>
-            <select class="form-control" 
-                    name="CustomerOccupation" #Coccupation="ngModel" [disabled]="f.invalid"
-                    [(ngModel)]="cus.occupationValue" required>
-              <option value="-1">Please select a Occupation</option>
-              <option *ngFor="let occ of Occupations"
-                      [value]="occ">{{occ}}
-              </option>
-            </select>
-            </div>  
-            <div *ngIf="Coccupation.touched && Coccupation.invalid" >  
-              <div *ngIf="Coccupation.errors.required">Select Occupation.</div>  
-          </div>  
-          </div>
-          
         </div>
       </div>
       <div class="row lineBreak">
       </div>
-    
-  </form>
+      <div class="row">
+          <div class="displayflex">
+            <div class="form-group displayflex">
+              <div class="fwidth">
+                <label>Occupation <span  class="MandatoryField">*</span>&nbsp; :&nbsp; </label>
+              </div>
+              <div>
+              <select class="form-control" 
+                      name="CustomerOccupation" #CustomerOccupation="ngModel" 
+                     [(ngModel)]="cus.occupationValue" required 
+                (change)="CalculatePremium()">
+                <option value="-1">Please select a Occupation</option>
+                <option *ngFor="let occ of occupations"
+                        [value]="occ.occupationValue">{{occ.occupationName}}
+                </option>
+              </select>
+              </div>  
+              <div *ngIf="CustomerOccupation?.touched && CustomerOccupation?.invalid" >  
+                <div *ngIf="CustomerOccupation.errors.required">Select 
+  
+  Occupation.</div>  
+            </div>  
+            </div>
+            
+          </div>
+        </div>
+        <div class="row lineBreak">
+        </div>
+        <div class="row">
+          <div class="form-group displayflex">
+            <div class="fwidth">
+              <label> <span  class="MandatoryField">Premium Amount &nbsp; : &nbsp;</span> </label>
+            </div>
+            <div>
+              <span  class="MandatoryField"> {{premiumAmount}}</span>
+            </div>
+            </div>
+        </div>
+      
+    </form>
+    </div>
   </div>
+  
