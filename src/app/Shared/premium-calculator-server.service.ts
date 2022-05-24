@@ -24,6 +24,6 @@ export class PremiumCalculatorServerService {
   } 
   private extractData(res:Response){
     let body = res;
-    return body || {};
+    return body ;
   } 
 }

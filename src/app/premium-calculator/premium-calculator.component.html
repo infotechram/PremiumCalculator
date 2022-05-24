@@ -107,7 +107,7 @@
               <select class="form-control" 
                       name="CustomerOccupation" #CustomerOccupation="ngModel" 
                      [(ngModel)]="cus.occupationValue" required 
-                (change)="CalculatePremium()">
+                (change)="CalculatePremium()" [disabled]="!f.valid">
                 <option value="-1">Please select a Occupation</option>
                 <option *ngFor="let occ of occupations"
                         [value]="occ.occupationValue">{{occ.occupationName}}
